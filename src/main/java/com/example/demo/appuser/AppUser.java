@@ -42,11 +42,11 @@ public class AppUser implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private UserRole appUserRole;
+    private AppUserRole appUserRole;
     private boolean locked = false;
     private boolean enabled = false;
 
-    public AppUser(String username, String email, String password, UserRole appUserRole) {
+    public AppUser(String username, String email, String password, AppUserRole appUserRole) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -57,6 +57,11 @@ public class AppUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
         return Collections.singletonList(authority);
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
